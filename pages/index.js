@@ -2,7 +2,8 @@ import { useState, useMemo } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import Layout from '@/components/Layout';
-import { mockPopList } from '@/lib/data'; // Importa nossos dados
+// APAGADO: import { mockPopList } from '@/lib/data'; 
+import { getAllPops } from '@/lib/pops'; // NOVO: Importa a função real
 
 // ÍCONES SVG (colocamos aqui para simplicidade, poderiam ser componentes)
 const IconSearch = () => (
@@ -12,12 +13,13 @@ const IconSearch = () => (
 );
 
 /*
-  getStaticProps() é uma função do Next.js que roda no "build".
-  Ela busca os dados (agora, do nosso arquivo) e os envia para a página como "props".
-  Isso torna a página super rápida (estática).
+  getStaticProps() ATUALIZADA
+  Agora ela é assíncrona e busca os dados reais do N8N.
 */
 export async function getStaticProps() {
-  const pops = mockPopList;
+  // const pops = mockPopList; // APAGADO
+  const pops = await getAllPops(); // NOVO: Busca dados reais
+  
   // Extrai categorias únicas para o filtro
   const categories = [...new Set(pops.map(p => p.categoria))].sort();
 
@@ -26,6 +28,10 @@ export async function getStaticProps() {
       pops,
       categories,
     },
+    // NOVO: Incremental Static Regeneration (ISR)
+    // O Next.js vai re-buscar os dados do N8N a cada 60 segundos
+    // sem precisar de um novo deploy!
+    revalidate: 60, // Em segundos
   };
 }
 
@@ -33,12 +39,10 @@ export async function getStaticProps() {
 export default function HomePage({ pops, categories }) {
   
   // --- LÓGICA DE FILTRO COM REACT ---
-  // Usamos "useState" para guardar o que o usuário digita
+  // (Esta lógica permanece a mesma)
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
 
-  // "useMemo" otimiza o filtro. Ele só re-calcula a lista
-  // quando os pops, searchTerm ou selectedCategory mudarem.
   const filteredPops = useMemo(() => {
     return pops.filter(pop => {
       // 1. Filtro de Categoria
@@ -121,8 +125,8 @@ export default function HomePage({ pops, categories }) {
           {filteredPops.map(pop => (
             // Cada card agora é um <Link> para a página de detalhe
             <Link 
-              href={`/pop/${pop.id}`} // Rota dinâmica
-              key={pop.id} 
+              href={`/pop/${pop.pop_slug}`} // ATUALIZADO: Usamos pop.pop_slug para a URL
+              key={pop.id} // ATUALIZADO: Usamos pop.id (o número do N8N) como key
               className="bg-white p-6 rounded-lg shadow-sm border border-secondary-200 hover:shadow-md transition-shadow cursor-pointer block"
             >
               <div className="flex justify-between items-center mb-2">
@@ -130,7 +134,8 @@ export default function HomePage({ pops, categories }) {
                   <span className="text-sm text-gray-500">⭐ {pop.avaliacao_media}</span>
               </div>
               <h2 className="text-xl font-bold font-heading mb-2 text-text">{pop.titulo}</h2>
-              <p className="text-gray-600 text-sm mb-4">Por: <span className="font-medium">{pop.autor}</span> em <span className="font-medium">{pop.empresa_contexto}</span></p>
+              {/* ATUALIZADO: Usamos pop.autor_nome do nosso "join" */}
+              <p className="text-gray-600 text-sm mb-4">Por: <span className="font-medium">{pop.autor_nome}</span> em <span className="font-medium">{pop.empresa_contexto}</span></p>
               <div className="flex flex-wrap gap-2">
                   {pop.tags.map(tag => (
                     <span key={tag} className="text-xs text-text bg-gray-200 px-2 py-1 rounded-full">{tag}</span>
