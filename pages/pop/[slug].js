@@ -2,8 +2,9 @@ import { useEffect } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import Layout from '@/components/Layout';
-import { mockPopList } from '@/lib/data';
-import mermaid from 'mermaid'; // Importa o mermaid
+// APAGADO: import { mockPopList } from '@/lib/data';
+import { getAllPops } from '@/lib/pops'; // NOVO: Importa a função real
+import mermaid from 'mermaid'; 
 
 // --- Ícones SVG ---
 // (Em um projeto maior, eles iriam para seus próprios arquivos em /components/Icons)
@@ -32,55 +33,72 @@ const IconRocket = () => (
   </svg>
 );
 
+
 // --- LÓGICA DE DADOS (Next.js) ---
 
 /*
-  getStaticPaths()
-  Esta função diz ao Next.js quais páginas dinâmicas ele deve construir.
-  Nós lemos a lista de POPs e criamos um "path" para cada ID.
+  getStaticPaths() - ATUALIZADO
+  Busca os dados reais do N8N para saber quais caminhos (slugs) gerar.
 */
 export async function getStaticPaths() {
-  const paths = mockPopList.map(pop => ({
-    params: { id: pop.id },
+  const pops = await getAllPops(); // Busca dados reais
+  
+  const paths = pops.map(pop => ({
+    // ATUALIZADO: Usamos 'slug' (o nome do arquivo) e 'pop.pop_slug' (o dado)
+    params: { slug: pop.pop_slug }, 
   }));
 
-  return { paths, fallback: false }; // fallback: false = 404 se o ID não existir
+  // fallback: 'blocking' vai gerar a página no primeiro acesso se ela não existir
+  return { paths, fallback: 'blocking' }; 
 }
 
 /*
-  getStaticProps({ params })
-  Esta função busca os dados para UMA página específica.
-  O 'params.id' vem da URL.
+  getStaticProps({ params }) - ATUALIZADO
+  Busca os dados para UMA página específica usando o 'slug'.
 */
 export async function getStaticProps({ params }) {
-  const pop = mockPopList.find(p => p.id === params.id);
+  const allPops = await getAllPops(); // Busca todos os POPs processados
   
-  // Se não encontrar o pop (caso raro), retorna notFound
+  // Encontra o POP específico pelo 'slug' da URL
+  const pop = allPops.find(p => p.pop_slug === params.slug);
+  
   if (!pop) {
     return { notFound: true };
   }
 
-  return { props: { pop } };
+  return { 
+    props: { pop },
+    revalidate: 60, // Também revalida esta página a cada 60s
+  };
 }
 
 // --- COMPONENTE DA PÁGINA ---
 
 export default function PopDetailPage({ pop }) {
 
-  // Este 'useEffect' roda no navegador DEPOIS que a página carrega.
-  // É o lugar perfeito para inicializar o Mermaid.
+  // O useEffect para o Mermaid permanece o mesmo
   useEffect(() => {
-    mermaid.initialize({ 
-        startOnLoad: false, 
-        theme: 'neutral',
-        flowchart: {
-            useMaxWidth: false // Esta é a configuração que descobrimos
-        }
-    });
-    // Força o Mermaid a encontrar e renderizar todos os gráficos
-    // que estão na página agora.
-    mermaid.run();
-  }, [pop]); // Re-roda se o POP mudar (para navegação client-side)
+    // ATUALIZADO: Verificamos se 'mermaid' existe antes de usar
+    if (pop && mermaid) {
+      try {
+        mermaid.initialize({ 
+            startOnLoad: false, 
+            theme: 'neutral',
+            flowchart: {
+                useMaxWidth: false 
+            }
+        });
+        mermaid.run();
+      } catch (e) {
+        console.error('Erro ao inicializar ou rodar o Mermaid:', e);
+      }
+    }
+  }, [pop]); // Re-roda se o POP mudar
+
+  // Fallback para 'fallback: blocking'
+  if (!pop) {
+    return <Layout><p>Carregando...</p></Layout>
+  }
 
   return (
     <Layout>
@@ -89,7 +107,6 @@ export default function PopDetailPage({ pop }) {
         <meta name="description" content={pop.objetivo} />
       </Head>
 
-      {/* Botão de Voltar */}
       <div className="mb-4">
         <Link href="/" className="flex items-center gap-2 text-sm text-primary-500 hover:underline font-medium">
           <IconArrowLeft />
@@ -97,11 +114,12 @@ export default function PopDetailPage({ pop }) {
         </Link>
       </div>
 
-      {/* Cabeçalho do POP (Convertido do protótipo) */}
+      {/* Cabeçalho do POP */}
       <div className="bg-white p-8 rounded-lg shadow-sm border border-secondary-200 mb-6">
         <span className="text-sm font-medium text-primary-500">{pop.categoria}</span>
         <h1 className="text-4xl font-bold text-text mt-2 mb-3 font-heading">{pop.titulo}</h1>
-        <p className="text-lg text-gray-600">Por <span className="font-semibold text-text">{pop.autor}</span> ({pop.empresa_contexto})</p>
+        {/* ATUALIZADO: Usamos pop.autor_nome do nosso "join" */}
+        <p className="text-lg text-gray-600">Por <span className="font-semibold text-text">{pop.autor_nome}</span> ({pop.empresa_contexto})</p>
         
         <div className="flex flex-wrap gap-2 mt-4">
           {pop.tags.map(tag => (
@@ -115,7 +133,6 @@ export default function PopDetailPage({ pop }) {
         <div className="bg-white p-8 rounded-lg shadow-sm border border-secondary-200 mb-6 relative">
           <h2 className="text-2xl font-bold mb-6 font-heading">Fluxograma Visual 🧭</h2>
           <div className="p-4 border border-secondary-200 rounded-lg bg-bg overflow-x-auto">
-            {/* O Mermaid vai encontrar esta tag 'pre' e renderizar o gráfico */}
             <pre className="mermaid">
               {pop.fluxograma_mermaid}
             </pre>
