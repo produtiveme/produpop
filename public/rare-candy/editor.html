@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editor - Rare Candy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({
+            startOnLoad: false,
+            theme: 'neutral',
+            suppressErrors: true,
+            logLevel: 'fatal'
+        });
+        window.mermaid = mermaid;
+    </script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: 'hsl(330 81% 60%)',
+                        'primary-foreground': 'hsl(0 0% 100%)',
+                        secondary: 'hsl(280 60% 65%)',
+                        'secondary-foreground': 'hsl(0 0% 100%)',
+                        accent: 'hsl(200 70% 60%)',
+                        'accent-foreground': 'hsl(0 0% 100%)',
+                        muted: 'hsl(330 20% 95%)',
+                        'muted-foreground': 'hsl(240 5% 45%)',
+                        border: 'hsl(330 30% 90%)',
+                        ring: 'hsl(330 81% 60%)',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-gray-50 text-gray-900 pb-20">
+
+    <!-- Navbar -->
+    <nav class="bg-white border-b border-gray-200 sticky top-0 z-20">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="index.html"
+                        class="flex items-center gap-2 text-gray-500 hover:text-gray-900 transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd"
+                                d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z"
+                                clip-rule="evenodd" />
+                        </svg>
+                        Voltar
+                    </a>
+                </div>
+                <div class="flex items-center gap-3">
+                    <button type="button" id="cancel-btn"
+                        class="px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none">
+                        Cancelar
+                    </button>
+                    <button type="submit" form="pop-form" id="save-btn"
+                        class="px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white gradient-primary hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-ring">
+                        Salvar POP
+                    </button>
+                    <button type="button" onclick="ApiService.logout()"
+                        class="px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none"
+                        title="Sair">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <h1 id="page-title" class="text-3xl font-bold text-gray-900 mb-8">Novo POP</h1>
+
+        <form id="pop-form" class="space-y-8">
+
+            <!-- Seção 1: Informações Básicas -->
+            <div class="bg-white shadow px-4 py-5 sm:rounded-lg sm:p-6">
+                <div class="md:grid md:grid-cols-3 md:gap-6">
+                    <div class="md:col-span-1">
+                        <h3 class="text-lg font-medium leading-6 text-gray-900">Informações Básicas</h3>
+                        <p class="mt-1 text-sm text-gray-500">Dados principais de identificação do POP.</p>
+                    </div>
+                    <div class="mt-5 md:mt-0 md:col-span-2 space-y-6">
+                        <div class="grid grid-cols-6 gap-6">
+                            <div class="col-span-6 sm:col-span-4">
+                                <label for="titulo" class="block text-sm font-medium text-gray-700">Título</label>
+                                <input type="text" name="titulo" id="titulo" required
+                                    class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md p-2 border">
+                            </div>
+
+                            <div class="col-span-6 sm:col-span-2">
+                                <label for="publicado" class="block text-sm font-medium text-gray-700">Status</label>
+                                <select id="publicado" name="publicado"
+                                    class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                                    <option value="true">Publicado</option>
+                                    <option value="false">Rascunho</option>
+                                </select>
+                            </div>
+
+                            <div class="col-span-6 sm:col-span-3">
+                                <label for="pop_slug" class="block text-sm font-medium text-gray-700">Slug (URL)</label>
+                                <input type="text" name="pop_slug" id="pop_slug" required
+                                    class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md p-2 border">
+                            </div>
+
+                            <div class="col-span-6 sm:col-span-3">
+                                <label for="categoria" class="block text-sm font-medium text-gray-700">Categoria</label>
+                                <input type="text" name="categoria" id="categoria" list="categorias-list"
+                                    class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md p-2 border">
+                                <datalist id="categorias-list">
+                                    <option value="Financeiro">
+                                    <option value="Marketing">
+                                    <option value="Vendas">
+                                    <option value="RH">
+                                    <option value="Operações">
+                                </datalist>
+                            </div>
+
+                            <div class="col-span-6 sm:col-span-3">
+                                <label for="id_autor" class="block text-sm font-medium text-gray-700">Autor</label>
+                                <select id="id_autor" name="id_autor"
+                                    class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                                    <!-- Populated by JS -->
+                                </select>
+                            </div>
+
+                            <div class="col-span-6 sm:col-span-3">
+                                <label for="empresa_contexto"
+                                    class="block text-sm font-medium text-gray-700">Empresa/Contexto</label>
+                                <input type="text" name="empresa_contexto" id="empresa_contexto"
+                                    class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md p-2 border">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Seção 2: Detalhes e Contexto -->
+            <div class="bg-white shadow px-4 py-5 sm:rounded-lg sm:p-6">
+                <div class="md:grid md:grid-cols-3 md:gap-6">
+                    <div class="md:col-span-1">
+                        <h3 class="text-lg font-medium leading-6 text-gray-900">Detalhes e Contexto</h3>
+                        <p class="mt-1 text-sm text-gray-500">Explique o propósito e o contexto deste procedimento.</p>
+                    </div>
+                    <div class="mt-5 md:mt-0 md:col-span-2 space-y-6">
+                        <div>
+                            <label for="objetivo" class="block text-sm font-medium text-gray-700">Objetivo</label>
+                            <textarea id="objetivo" name="objetivo" rows="3"
+                                class="shadow-sm focus:ring-blue-500 focus:border-blue-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md p-2"></textarea>
+                        </div>
+
+                        <div class="grid grid-cols-6 gap-6">
+                            <div class="col-span-6 sm:col-span-3">
+                                <label for="quando_usar" class="block text-sm font-medium text-gray-700">Quando
+                                    Usar</label>
+                                <input type="text" name="quando_usar" id="quando_usar"
+                                    class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md p-2 border">
+                            </div>
+                            <div class="col-span-6 sm:col-span-3">
+                                <label for="nivel_complexidade"
+                                    class="block text-sm font-medium text-gray-700">Complexidade</label>
+                                <select id="nivel_complexidade" name="nivel_complexidade"
+                                    class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                                    <option value="Baixa">Baixa</option>
+                                    <option value="Média">Média</option>
+                                    <option value="Alta">Alta</option>
+                                </select>
+                            </div>
+                            <div class="col-span-6 sm:col-span-3">
+                                <label for="camada" class="block text-sm font-medium text-gray-700">Camada</label>
+                                <select id="camada" name="camada"
+                                    class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                                    <option value="Estratégico">Estratégico</option>
+                                    <option value="Tático">Tático</option>
+                                    <option value="Operacional">Operacional</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label for="historia_curta" class="block text-sm font-medium text-gray-700">História
+                                Curta</label>
+                            <textarea id="historia_curta" name="historia_curta" rows="2"
+                                class="shadow-sm focus:ring-blue-500 focus:border-blue-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md p-2"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Seção 3: Listas Dinâmicas -->
+            <div class="bg-white shadow px-4 py-5 sm:rounded-lg sm:p-6">
+                <div class="md:grid md:grid-cols-3 md:gap-6">
+                    <div class="md:col-span-1">
+                        <h3 class="text-lg font-medium leading-6 text-gray-900">Listas</h3>
+                        <p class="mt-1 text-sm text-gray-500">Adicione itens para as listas do POP.</p>
+                    </div>
+                    <div class="mt-5 md:mt-0 md:col-span-2 space-y-6">
+
+                        <!-- Tags -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Tags</label>
+                            <div id="tags-container"></div>
+                            <button type="button" onclick="addListItem('tags-container')"
+                                class="mt-2 inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded text-blue-700 bg-blue-100 hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                + Adicionar Tag
+                            </button>
+                        </div>
+
+                        <!-- Materiais -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Materiais / Entradas</label>
+                            <div id="materiais-container"></div>
+                            <button type="button" onclick="addListItem('materiais-container')"
+                                class="mt-2 inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded text-blue-700 bg-blue-100 hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                + Adicionar Material
+                            </button>
+                        </div>
+
+                        <!-- Saídas -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Saídas / Resultados</label>
+                            <div id="saidas-container"></div>
+                            <button type="button" onclick="addListItem('saidas-container')"
+                                class="mt-2 inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded text-blue-700 bg-blue-100 hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                + Adicionar Saída
+                            </button>
+                        </div>
+
+                        <!-- Ferramentas -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Ferramentas Usadas</label>
+                            <div id="ferramentas-container"></div>
+                            <button type="button" onclick="addListItem('ferramentas-container')"
+                                class="mt-2 inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded text-blue-700 bg-blue-100 hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                + Adicionar Ferramenta
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Seção 4: Passo a Passo -->
+            <div class="bg-white shadow px-4 py-5 sm:rounded-lg sm:p-6">
+                <div class="md:grid md:grid-cols-3 md:gap-6">
+                    <div class="md:col-span-1">
+                        <h3 class="text-lg font-medium leading-6 text-gray-900">Passo a Passo</h3>
+                        <p class="mt-1 text-sm text-gray-500">Descreva o procedimento em etapas sequenciais.</p>
+                    </div>
+                    <div class="mt-5 md:mt-0 md:col-span-2">
+                        <div id="steps-container"></div>
+                        <button type="button" onclick="addStep()"
+                            class="mt-4 w-full inline-flex justify-center items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none">
+                            + Adicionar Passo
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Seção 5: Conteúdo Extra -->
+            <div class="bg-white shadow px-4 py-5 sm:rounded-lg sm:p-6">
+                <div class="md:grid md:grid-cols-3 md:gap-6">
+                    <div class="md:col-span-1">
+                        <h3 class="text-lg font-medium leading-6 text-gray-900">Conteúdo Extra</h3>
+                        <p class="mt-1 text-sm text-gray-500">Dicas, avisos e fluxogramas.</p>
+                    </div>
+                    <div class="mt-5 md:mt-0 md:col-span-2 space-y-6">
+                        <div>
+                            <label for="dicas_e_boas_praticas" class="block text-sm font-medium text-gray-700">Dicas e
+                                Boas Práticas</label>
+                            <textarea id="dicas_e_boas_praticas" name="dicas_e_boas_praticas" rows="3"
+                                class="shadow-sm focus:ring-blue-500 focus:border-blue-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md p-2"></textarea>
+                        </div>
+                        <div>
+                            <label for="problemas_comuns" class="block text-sm font-medium text-gray-700">Problemas
+                                Comuns</label>
+                            <textarea id="problemas_comuns" name="problemas_comuns" rows="3"
+                                class="shadow-sm focus:ring-blue-500 focus:border-blue-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md p-2"></textarea>
+                        </div>
+                        <div>
+                            <label for="decisoes_excecoes" class="block text-sm font-medium text-gray-700">Decisões e
+                                Exceções</label>
+                            <textarea id="decisoes_excecoes" name="decisoes_excecoes" rows="3"
+                                class="shadow-sm focus:ring-blue-500 focus:border-blue-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md p-2"></textarea>
+                        </div>
+                        <div>
+                            <label for="impacto_no_negocio" class="block text-sm font-medium text-gray-700">Impacto no
+                                Negócio</label>
+                            <textarea id="impacto_no_negocio" name="impacto_no_negocio" rows="2"
+                                class="shadow-sm focus:ring-blue-500 focus:border-blue-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md p-2"></textarea>
+                        </div>
+                        <div>
+                            <label for="inspirado_em" class="block text-sm font-medium text-gray-700">Inspirado
+                                em</label>
+                            <input type="text" name="inspirado_em" id="inspirado_em"
+                                class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md p-2 border">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Fluxograma (Mermaid)</label>
+                            <p class="text-xs text-gray-500 mb-3">Digite o código Mermaid à esquerda e veja o preview em
+                                tempo real à direita.</p>
+
+                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                                <!-- Editor de Código -->
+                                <div>
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="text-xs font-medium text-gray-600">Código</span>
+                                        <button type="button" onclick="clearMermaid()"
+                                            class="text-xs text-red-600 hover:text-red-800">Limpar</button>
+                                    </div>
+                                    <textarea id="fluxograma_mermaid" name="fluxograma_mermaid" rows="12"
+                                        class="font-mono text-xs shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full border border-gray-300 rounded-md p-3"
+                                        placeholder="graph TD;&#10;    A[Início] --> B{Decisão};&#10;    B -->|Sim| C[Ação 1];&#10;    B -->|Não| D[Ação 2];&#10;    C --> E[Fim];&#10;    D --> E;"></textarea>
+                                </div>
+
+                                <!-- Preview -->
+                                <div>
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="text-xs font-medium text-gray-600">Preview</span>
+                                        <span id="mermaid-status" class="text-xs text-gray-400">Aguardando
+                                            código...</span>
+                                    </div>
+                                    <div id="mermaid-preview"
+                                        class="border border-gray-300 rounded-md p-4 bg-white min-h-[288px] flex items-center justify-center overflow-auto">
+                                        <span class="text-gray-400 text-sm">O diagrama aparecerá aqui</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </main>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay"
+        class="hidden fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center z-50">
+        <div class="bg-white p-5 rounded-lg flex items-center gap-3">
+            <div class="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600"></div>
+            <span class="text-gray-700 font-medium">Carregando dados...</span>
+        </div>
+    </div>
+
+    <script src="assets/js/api.js"></script>
+    <script src="assets/js/editor.js"></script>
+</body>
+
+</html>

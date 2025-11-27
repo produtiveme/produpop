@@ -1,0 +1,103 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+    /* Quantum Rose Theme - Tons Suaves e Pastéis */
+    --primary: 330 75% 56%;
+    /* Rosa principal mais suave */
+    --primary-foreground: 0 0% 100%;
+
+    /* Cores Secundárias */
+    --secondary: 280 50% 75%;
+    /* Roxo pastel claro */
+    --secondary-foreground: 240 10% 25%;
+
+    /* Cores de Acento */
+    --accent: 330 85% 65%;
+    /* Rosa mais vibrante para acentos */
+    --accent-foreground: 0 0% 100%;
+
+    /* Cores de Fundo */
+    --background: 330 25% 98%;
+    /* Fundo levemente rosa */
+    --foreground: 240 10% 15%;
+
+    /* Cores de Card */
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 15%;
+
+    /* Cores Muted */
+    --muted: 330 30% 96%;
+    /* Rosa muito claro */
+    --muted-foreground: 240 5% 50%;
+
+    /* Bordas e Rings */
+    --border: 330 20% 92%;
+    /* Borda rosa suave */
+    --ring: 330 75% 56%;
+    /* Foco rosa */
+
+    /* Estados */
+    --success: 142 76% 36%;
+    --warning: 38 92% 50%;
+    --error: 0 84% 60%;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: hsl(var(--muted));
+}
+
+::-webkit-scrollbar-thumb {
+    background: hsl(var(--primary) / 0.3);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--primary) / 0.5);
+}
+
+/* Oculta mensagens de erro do Mermaid */
+#d3-error-container,
+.error-icon,
+[id^="mermaid-error-"],
+body>div[style*="position: fixed"] {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+}
+
+/* Gradientes Quantum Rose */
+.gradient-primary {
+    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--secondary)));
+}
+
+.gradient-accent {
+    background: linear-gradient(135deg, hsl(var(--accent)), hsl(var(--primary)));
+}
+
+.gradient-subtle {
+    background: linear-gradient(135deg, hsl(var(--muted)), hsl(var(--card)));
+}
+
+/* Animações suaves */
+* {
+    transition-duration: 150ms;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Focus states com Quantum Rose */
+*:focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 2px;
+}
