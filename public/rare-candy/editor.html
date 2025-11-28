@@ -43,7 +43,7 @@
 
     <!-- Navbar -->
     <nav class="bg-white border-b border-gray-200 sticky top-0 z-20">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
                 <div class="flex items-center">
                     <a href="index.html"
@@ -79,7 +79,7 @@
         </div>
     </nav>
 
-    <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <h1 id="page-title" class="text-3xl font-bold text-gray-900 mb-8">Novo POP</h1>
 
         <form id="pop-form" class="space-y-8">
@@ -307,38 +307,55 @@
                                 class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md p-2 border">
                         </div>
 
+                    </div>
+                </div>
+            </div>
+
+            <!-- Seção Dedicada: Fluxograma Mermaid -->
+            <div
+                class="bg-gradient-to-br from-purple-50 to-pink-50 shadow-lg px-6 py-6 sm:rounded-lg border-2 border-purple-200">
+                <div class="mb-4">
+                    <div class="flex items-center justify-between">
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Fluxograma (Mermaid)</label>
-                            <p class="text-xs text-gray-500 mb-3">Digite o código Mermaid à esquerda e veja o preview em
-                                tempo real à direita.</p>
-
-                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                                <!-- Editor de Código -->
-                                <div>
-                                    <div class="flex items-center justify-between mb-2">
-                                        <span class="text-xs font-medium text-gray-600">Código</span>
-                                        <button type="button" onclick="clearMermaid()"
-                                            class="text-xs text-red-600 hover:text-red-800">Limpar</button>
-                                    </div>
-                                    <textarea id="fluxograma_mermaid" name="fluxograma_mermaid" rows="12"
-                                        class="font-mono text-xs shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full border border-gray-300 rounded-md p-3"
-                                        placeholder="graph TD;&#10;    A[Início] --> B{Decisão};&#10;    B -->|Sim| C[Ação 1];&#10;    B -->|Não| D[Ação 2];&#10;    C --> E[Fim];&#10;    D --> E;"></textarea>
-                                </div>
-
-                                <!-- Preview -->
-                                <div>
-                                    <div class="flex items-center justify-between mb-2">
-                                        <span class="text-xs font-medium text-gray-600">Preview</span>
-                                        <span id="mermaid-status" class="text-xs text-gray-400">Aguardando
-                                            código...</span>
-                                    </div>
-                                    <div id="mermaid-preview"
-                                        class="border border-gray-300 rounded-md p-4 bg-white min-h-[288px] flex items-center justify-center overflow-auto">
-                                        <span class="text-gray-400 text-sm">O diagrama aparecerá aqui</span>
-                                    </div>
-                                </div>
-                            </div>
+                            <h3 class="text-xl font-bold text-purple-900 flex items-center gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-purple-600" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                                </svg>
+                                Fluxograma Visual (Mermaid)
+                            </h3>
+                            <p class="text-sm text-purple-700 mt-1">Crie diagramas de fluxo interativos com código
+                                Mermaid</p>
                         </div>
+                        <button type="button" onclick="clearMermaid()"
+                            class="px-3 py-1.5 text-sm font-medium text-red-700 bg-red-100 hover:bg-red-200 rounded-md transition-colors">
+                            Limpar
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Editor de Código -->
+                <div class="mb-4">
+                    <div class="flex items-center justify-between mb-2">
+                        <label class="text-sm font-semibold text-purple-900">📝 Código Mermaid</label>
+                        <span class="text-xs text-purple-600 bg-purple-100 px-2 py-1 rounded">Sintaxe: graph TD</span>
+                    </div>
+                    <textarea id="fluxograma_mermaid" name="fluxograma_mermaid" rows="8"
+                        class="font-mono text-sm shadow-sm focus:ring-2 focus:ring-purple-500 focus:border-purple-500 block w-full border-2 border-purple-200 rounded-lg p-4 bg-white"
+                        placeholder="graph TD;&#10;    A[Início] --> B{Decisão};&#10;    B -->|Sim| C[Ação 1];&#10;    B -->|Não| D[Ação 2];&#10;    C --> E[Fim];&#10;    D --> E;"></textarea>
+                </div>
+
+                <!-- Preview -->
+                <div>
+                    <div class="flex items-center justify-between mb-2">
+                        <label class="text-sm font-semibold text-purple-900">👁️ Preview em Tempo Real</label>
+                        <span id="mermaid-status"
+                            class="text-xs text-purple-600 bg-purple-100 px-2 py-1 rounded">Aguardando código...</span>
+                    </div>
+                    <div id="mermaid-preview"
+                        class="border-2 border-purple-200 rounded-lg p-6 bg-white min-h-[400px] flex items-center justify-center overflow-auto shadow-inner">
+                        <span class="text-purple-400 text-sm">O diagrama aparecerá aqui ✨</span>
                     </div>
                 </div>
             </div>

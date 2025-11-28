@@ -135,14 +135,43 @@ document.addEventListener('DOMContentLoaded', async () => {
                 <span class="font-bold text-gray-500">Passo #${index}</span>
                 <button type="button" onclick="this.closest('.step-item').remove()" class="text-red-600 hover:text-red-800 text-sm">Remover</button>
             </div>
-            <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div class="sm:col-span-2">
                     <label class="block text-xs font-medium text-gray-700">Descrição</label>
-                    <textarea class="step-desc mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm border p-2" rows="2"></textarea>
+                    <textarea class="step-desc mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm border p-2" rows="2" placeholder="O que acontece neste passo?"></textarea>
                 </div>
+                
                 <div>
                     <label class="block text-xs font-medium text-gray-700">Responsável</label>
-                    <input type="text" class="step-resp mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm border p-2">
+                    <input type="text" class="step-resp mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm border p-2" placeholder="Ex: Equipe de Vendas">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-medium text-gray-700">Canais</label>
+                    <input type="text" class="step-canais mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm border p-2" placeholder="Ex: WhatsApp, E-mail">
+                </div>
+
+                <div class="sm:col-span-2">
+                    <label class="block text-xs font-medium text-gray-700">Ação Necessária</label>
+                    <input type="text" class="step-acao mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm border p-2" placeholder="Ex: Registrar no CRM">
+                </div>
+
+                <div class="sm:col-span-2 border-t border-gray-200 pt-3 mt-1">
+                    <label class="block text-xs font-bold text-gray-700 mb-2">Decisão (Opcional)</label>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                        <div>
+                            <label class="block text-[10px] text-gray-500">Pergunta/Decisão</label>
+                            <input type="text" class="step-decisao-nome mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-xs border p-2" placeholder="Ex: Cliente respondeu?">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] text-green-600">Se Sim</label>
+                            <input type="text" class="step-decisao-sim mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-xs border p-2" placeholder="Ex: Ir para passo 2">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] text-red-600">Se Não</label>
+                            <input type="text" class="step-decisao-nao mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-xs border p-2" placeholder="Ex: Encerrar">
+                        </div>
+                    </div>
                 </div>
             </div>
         `;
@@ -161,14 +190,43 @@ document.addEventListener('DOMContentLoaded', async () => {
                     <span class="font-bold text-gray-500">Passo #${i + 1}</span>
                     <button type="button" onclick="this.closest('.step-item').remove()" class="text-red-600 hover:text-red-800 text-sm">Remover</button>
                 </div>
-                <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+                <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
                     <div class="sm:col-span-2">
                         <label class="block text-xs font-medium text-gray-700">Descrição</label>
-                        <textarea class="step-desc mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm border p-2" rows="2">${step.descricao}</textarea>
+                        <textarea class="step-desc mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm border p-2" rows="2">${step.descricao || ''}</textarea>
                     </div>
+                    
                     <div>
                         <label class="block text-xs font-medium text-gray-700">Responsável</label>
                         <input type="text" value="${step.responsavel || ''}" class="step-resp mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm border p-2">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-medium text-gray-700">Canais</label>
+                        <input type="text" value="${step.canais || ''}" class="step-canais mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm border p-2">
+                    </div>
+
+                    <div class="sm:col-span-2">
+                        <label class="block text-xs font-medium text-gray-700">Ação Necessária</label>
+                        <input type="text" value="${step.acao || ''}" class="step-acao mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm border p-2">
+                    </div>
+
+                    <div class="sm:col-span-2 border-t border-gray-200 pt-3 mt-1">
+                        <label class="block text-xs font-bold text-gray-700 mb-2">Decisão (Opcional)</label>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                            <div>
+                                <label class="block text-[10px] text-gray-500">Pergunta/Decisão</label>
+                                <input type="text" value="${step.decisao?.nome || ''}" class="step-decisao-nome mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-xs border p-2">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] text-green-600">Se Sim</label>
+                                <input type="text" value="${step.decisao?.sim || ''}" class="step-decisao-sim mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-xs border p-2">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] text-red-600">Se Não</label>
+                                <input type="text" value="${step.decisao?.nao || ''}" class="step-decisao-nao mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-xs border p-2">
+                            </div>
+                        </div>
                     </div>
                 </div>
             `;
@@ -186,7 +244,14 @@ document.addEventListener('DOMContentLoaded', async () => {
         const steps = Array.from(document.querySelectorAll('.step-item')).map((item, index) => ({
             ordem: index + 1,
             descricao: item.querySelector('.step-desc').value,
-            responsavel: item.querySelector('.step-resp').value
+            responsavel: item.querySelector('.step-resp').value,
+            canais: item.querySelector('.step-canais').value,
+            acao: item.querySelector('.step-acao').value,
+            decisao: {
+                nome: item.querySelector('.step-decisao-nome').value,
+                sim: item.querySelector('.step-decisao-sim').value,
+                nao: item.querySelector('.step-decisao-nao').value
+            }
         }));
 
         const data = {
