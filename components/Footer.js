@@ -4,8 +4,9 @@
 */
 export default function Footer() {
   return (
-    <footer className="text-center py-8 mt-12 border-t border-secondary-200">
-      <p className="text-sm text-gray-500">ProduPop 🧭 - Um produto ProdutiveMe</p>
+    <footer className="flex flex-col items-center py-8 mt-12 border-t border-secondary-200">
+      <img src="/logo.svg" alt="ProduPop Logo" className="h-8 w-auto mb-2 opacity-80" />
+      <p className="text-sm text-gray-500">ProduPop - Um produto ProdutiveMe</p>
     </footer>
   );
 }

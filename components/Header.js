@@ -16,8 +16,9 @@ export default function Header() {
               Substituímos o <a> por <Link> para navegação otimizada no Next.js.
               Não usamos mais 'onclick'.
             */}
-            <Link href="/" className="text-2xl font-bold text-primary-500 font-heading">
-              ProduPop 🧭
+            <Link href="/" className="flex items-center gap-2">
+              <img src="/logo.svg" alt="ProduPop Logo" className="h-10 w-auto" />
+              <span className="text-2xl font-bold text-primary-500 font-heading">ProduPop</span>
             </Link>
           </div>
           {/* Links de Navegação */}
@@ -25,10 +26,7 @@ export default function Header() {
             <Link href="/" className="text-text hover:text-primary-500 px-3 py-2 rounded-md text-sm font-medium">
               Home
             </Link>
-            {/* O link para "Submeter POP" agora aponta para a rota /submissao */}
-            <Link href="/submissao" className="bg-primary-500 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-primary-600 shadow-sm">
-              Submeter POP
-            </Link>
+
           </div>
         </div>
       </nav>
