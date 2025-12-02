@@ -100,7 +100,10 @@ const ShareButtons = ({ title }) => {
         className="p-2 bg-gray-100 text-black rounded-full hover:bg-gray-200 transition-colors"
         title="Compartilhar no Threads"
       >
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12.186 19.314c-1.71 0-3.268-.537-4.407-1.414-1.116-.859-1.723-2.05-1.723-3.386 0-2.895 2.607-5.312 6.13-5.312 1.554 0 3.01.487 4.101 1.373.99.805 1.565 1.933 1.565 3.12 0 2.27-1.777 4.195-4.242 4.195-.91 0-1.73-.26-2.314-.732-.57-.461-.885-1.11-.885-1.83 0-1.553 1.258-2.817 2.805-2.817.76 0 1.455.31 1.966.874.343.378.532.868.532 1.38 0 .15-.015.3-.045.447-.19.923-.99 1.59-1.937 1.59-.57 0-1.08-.22-1.432-.62-.308-.35-.478-.82-.478-1.323 0-1.78 1.97-3.23 4.39-3.23 2.65 0 4.63 1.83 4.63 4.27 0 2.68-2.18 4.93-5.09 4.93-2.97 0-5.32-2.31-5.32-5.27 0-2.91 2.3-5.27 5.15-5.27 1.23 0 2.39.42 3.32 1.2.22.19.56.16.75-.06.19-.22.16-.56-.06-.75-1.12-.94-2.52-1.45-4.01-1.45-3.47 0-6.29 2.88-6.29 6.42s2.82 6.42 6.29 6.42c1.55 0 3.01-.53 4.17-1.5.21-.18.24-.5.06-.71-.18-.21-.5-.24-.71-.06-.97.81-2.19 1.25-3.48 1.25z" /></svg>
+        {/* Ícone do Threads (Simple Icons) */}
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12.19 19.31C10.48 19.31 8.92 18.78 7.78 17.9C6.66 17.04 6.06 15.85 6.06 14.51C6.06 11.62 8.66 9.2 12.19 9.2C13.74 9.2 15.2 9.69 16.29 10.57C17.28 11.38 17.85 12.51 17.85 13.69C17.85 15.96 16.08 17.89 13.61 17.89C12.7 17.89 11.88 17.63 11.3 17.16C10.73 16.7 10.41 16.05 10.41 15.33C10.41 13.78 11.67 12.51 13.21 12.51C13.97 12.51 14.67 12.82 15.18 13.39C15.52 13.77 15.71 14.26 15.71 14.78C15.71 14.93 15.7 15.08 15.67 15.22C15.48 16.15 14.67 16.81 13.73 16.81C13.16 16.81 12.62 16.59 12.39 16.01C12.15 15.43 12.39 14.93 12.39 14.92L12.96 14.91C12.96 14.92 12.64 15.42 12.92 16.13C13.06 16.49 13.38 16.63 13.73 16.63C14.36 16.63 14.9 16.19 15.03 15.57C15.05 15.47 15.06 15.37 15.06 15.27C15.06 14.92 14.93 14.6 14.7 14.34C14.33 13.93 13.8 13.7 13.21 13.7C12.33 13.7 11.61 14.43 11.61 15.33C11.61 15.76 11.79 16.14 12.11 16.4C12.48 16.71 13.01 16.89 13.61 16.89C15.55 16.89 16.96 15.36 16.96 13.69C16.96 12.21 16.24 10.83 15.03 9.85C13.7 8.78 11.95 8.19 10.09 8.19C6.01 8.19 2.69 11.51 2.69 15.59C2.69 19.67 6.01 22.99 10.09 22.99C12.14 22.99 14.09 22.18 15.54 20.73L16.18 21.37C14.56 22.99 12.42 23.89 10.09 23.89C5.51 23.89 1.79 20.17 1.79 15.59C1.79 11.01 5.51 7.29 10.09 7.29C12.19 7.29 14.16 7.96 15.66 9.17C17.02 10.27 17.85 11.83 17.85 13.69C17.85 16.25 15.91 18.19 13.61 18.19C12.76 18.19 12.01 17.94 11.4 17.48C10.79 17.02 10.41 16.36 10.41 15.59C10.41 15.56 10.41 15.53 10.41 15.5C10.41 15.47 10.41 15.44 10.41 15.41L12.19 19.31Z" />
+        </svg>
       </a>
 
       {/* Pinterest */}
@@ -111,7 +114,10 @@ const ShareButtons = ({ title }) => {
         className="p-2 bg-red-50 text-[#E60023] rounded-full hover:bg-red-100 transition-colors"
         title="Compartilhar no Pinterest"
       >
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.162-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.099.12.112.225.085.345-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.399.165-1.495-.69-2.433-2.852-2.433-4.587 0-3.713 2.704-7.129 7.794-7.129 4.088 0 7.269 2.915 7.269 6.817 0 4.069-2.565 7.351-6.124 7.351-1.195 0-2.319-.619-2.703-1.351 0 0-.592 2.25-1.474 5.675-.448 1.728-1.349 3.446-2.009 4.608 1.517.469 3.125.726 4.793.726 6.627 0 11.987-5.365 11.987-11.987C23.97 5.367 18.627 0 12.017 0z" /></svg>
+        {/* Ícone do Pinterest (Apenas o P - FontAwesome) */}
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 512 512" fill="currentColor">
+          <path d="M496 256c0 137-111 248-248 248-25.6 0-50.2-3.9-73.4-11.1 10.1-16.5 25.2-43.5 30.8-65 3-11.6 15.4-59 15.4-59 8.1 15.4 31.7 28.5 56.8 28.5 74.8 0 128.7-68.8 128.7-154.3 0-81.9-66.9-143.2-152.9-143.2-107 0-163.9 71.8-163.9 150.1 0 36.4 19.4 81.7 50.3 96.1 4.7 2.2 7.2 1.2 8.3-3.3.8-3.4 5-20.3 6.9-28.1.6-2.5.3-4.7-1.7-7.1-10.1-12.5-18.3-35.3-18.3-56.6 0-54.7 41.4-107.6 112-107.6 60.9 0 104.9 36.9 104.9 102.4 0 58.9-35.2 104.8-87.7 104.8-26.7 0-47.4-16.3-40.8-44.4 8.4-37 25.1-76.7 25.1-104.5 0-24.6-13.1-45.5-41.5-45.5-33.1 0-59.4 34-59.4 79.1 0 27.3 9.7 53.3 26.3 70.1 2.5 2.5 3.5 5.4 1.7 8.5-10.2 17.9-24.3 43.8-35.2 58.8-17 23.5-51.7 51.6-51.7 51.6 27.1 50.2 79.5 84.3 140 84.3 87.1 0 157.6-70.7 157.6-157.6 0-87-70.5-157.6-157.6-157.6z" />
+        </svg>
       </a>
 
       {/* Reddit */}
@@ -205,37 +211,73 @@ export async function getStaticProps({ params }) {
 
 // --- COMPONENTE DA PÁGINA ---
 
+import SEO from '@/components/SEO';
+
+// ... (imports anteriores)
+
 export default function PopDetailPage({ pop }) {
 
-  // O useEffect para o Mermaid permanece o mesmo
-  useEffect(() => {
-    // ATUALIZADO: Verificamos se 'mermaid' existe antes de usar
-    if (pop && mermaid) {
-      try {
-        mermaid.initialize({
-          startOnLoad: false,
-          theme: 'neutral',
-          flowchart: {
-            useMaxWidth: false
-          }
-        });
-        mermaid.run();
-      } catch (e) {
-        console.error('Erro ao inicializar ou rodar o Mermaid:', e);
-      }
-    }
-  }, [pop]); // Re-roda se o POP mudar
+  // ... (useEffect do Mermaid permanece igual)
 
   // Fallback para 'fallback: blocking'
   if (!pop) {
     return <Layout><p>Carregando...</p></Layout>
   }
 
+  // URL Canônica (Assumindo que o site está em produpop.com.br ou similar)
+  // Idealmente, isso viria de uma variável de ambiente NEXT_PUBLIC_SITE_URL
+  const siteUrl = 'https://produpop.com.br';
+  const canonicalUrl = `${siteUrl}/pop/${pop.pop_slug}`;
+
+  // Imagem padrão para compartilhamento (pode ser uma logo ou gerada dinamicamente no futuro)
+  const ogImage = `${siteUrl}/og-image-default.png`;
+
+  // --- DADOS ESTRUTURADOS (JSON-LD) para "HowTo" ---
+  // Isso ajuda o Google a entender que é um passo a passo
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": pop.titulo,
+    "description": pop.objetivo,
+    "step": pop.passo_a_passo.map((step, index) => ({
+      "@type": "HowToStep",
+      "position": index + 1,
+      "name": `Passo ${step.ordem}`,
+      "text": step.descricao,
+      // Se tiver imagem no passo, adicionaríamos aqui: "image": step.imagem
+    })),
+    "supply": pop.materiais_ou_entradas.map(item => ({
+      "@type": "HowToSupply",
+      "name": item
+    })),
+    "tool": pop.ferramentas_usadas.map(tool => ({
+      "@type": "HowToTool",
+      "name": tool
+    })),
+    "author": {
+      "@type": "Person",
+      "name": pop.autor_nome,
+      "jobTitle": pop.empresa_contexto // Contexto como "cargo/empresa"
+    }
+  };
+
   return (
     <Layout>
+      {/* SEO e Metatags */}
+      <SEO
+        title={pop.titulo}
+        description={pop.objetivo}
+        canonical={canonicalUrl}
+        ogImage={ogImage}
+        ogType="article"
+      />
+
+      {/* JSON-LD injetado no Head */}
       <Head>
-        <title>{pop.titulo} - ProduPop</title>
-        <meta name="description" content={pop.objetivo} />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
       </Head>
 
       <div className="mb-4">

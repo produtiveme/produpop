@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://produpop.com.br
+
+# Sitemaps
+Sitemap: https://produpop.com.br/sitemap.xml
