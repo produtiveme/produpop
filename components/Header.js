@@ -26,6 +26,14 @@ export default function Header() {
             <Link href="/" className="text-text hover:text-primary-500 px-3 py-2 rounded-md text-sm font-medium">
               Home
             </Link>
+            <a
+              href="https://produtive.me"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-text hover:text-primary-500 px-3 py-2 rounded-md text-sm font-medium"
+            >
+              Conheça o Produ
+            </a>
 
           </div>
         </div>

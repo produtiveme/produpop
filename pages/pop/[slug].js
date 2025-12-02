@@ -186,8 +186,8 @@ export async function getStaticPaths() {
     params: { slug: pop.pop_slug },
   }));
 
-  // fallback: 'blocking' vai gerar a página no primeiro acesso se ela não existir
-  return { paths, fallback: 'blocking' };
+  // fallback: true permite mostrar um Skeleton enquanto a página é gerada
+  return { paths, fallback: true };
 }
 
 /*
@@ -213,10 +213,18 @@ export async function getStaticProps({ params }) {
 // --- COMPONENTE DA PÁGINA ---
 
 import SEO from '@/components/SEO';
+import { useRouter } from 'next/router';
+import PopDetailSkeleton from '@/components/PopDetailSkeleton';
 
 // ... (imports anteriores)
 
 export default function PopDetailPage({ pop }) {
+  const router = useRouter();
+
+  // Se a página estiver sendo gerada (fallback), mostra o Skeleton
+  if (router.isFallback) {
+    return <PopDetailSkeleton />;
+  }
 
   // Inicializa o Mermaid.js
   useEffect(() => {
@@ -242,9 +250,9 @@ export default function PopDetailPage({ pop }) {
     }
   }, [pop]);
 
-  // Fallback para 'fallback: blocking'
+  // Fallback de segurança (caso router.isFallback falhe ou pop seja null por outro motivo)
   if (!pop) {
-    return <Layout><p>Carregando...</p></Layout>
+    return <PopDetailSkeleton />;
   }
 
   // URL Canônica (Assumindo que o site está em produpop.com.br ou similar)
